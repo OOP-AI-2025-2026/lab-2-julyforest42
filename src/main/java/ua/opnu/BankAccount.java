@@ -3,10 +3,10 @@ package ua.opnu;
 public class BankAccount {
     String name;
     double balance;
-    double transactionFee;
+    double transactionFee = 0;
 
     void deposit(double amount) {
-        // TODO: modify method body
+        if (amount <= 0) return;
         balance = balance + amount;
     }
 
@@ -15,13 +15,14 @@ public class BankAccount {
     }
 
     boolean withdraw(double amount) {
-        // TODO: modify method body
-        balance = balance - amount;
+        if (amount <= 0 || balance < (amount + transactionFee)) return false;
+        balance = balance - (amount + transactionFee);
         return true;
     }
 
     boolean transfer(BankAccount receiver, double amount) {
-        // TODO: modify method body
-        return false;
+        if (!this.withdraw(amount)) return false;
+        receiver.deposit(amount);
+        return true;
     }
 }
